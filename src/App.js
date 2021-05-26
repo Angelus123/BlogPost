@@ -6,6 +6,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
+       {/* <BrowserRouter basename="/app-name"></BrowserRouter> */}
         <div className="App">
           <Blog />
         </div>

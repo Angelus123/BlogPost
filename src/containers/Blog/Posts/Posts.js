@@ -12,48 +12,59 @@ class Posts extends Component {
     
    componentDidMount() {
        console.log("pppppppp",this.props)
-    axios.get('/posts')
-    .then(response => {
-    console.log('response',response)
-        const posts =response.data.slice(0, 4);
-        const updatePosts = posts.map(post => {
-            return{
-                ...post,
-                author:'Max'
-            } 
-
-        })
-        this.setState({posts:updatePosts})
-            console.log('uuu',updatePosts)
-        })
+    axios.get('/news.json')
+  .then(response => {
+        const posts = response.data;
+        console.log('--res saint-', posts)
+        const fetchResults =[];
+        for(let key in posts){
+            fetchResults.unshift(
+                {
+                    ...response.data[key],
+                    id:key
+                }
+            ) 
+        }
+        console.log(fetchResults)
+        this.setState({posts:fetchResults})
+       
+        }
+        )
         .catch(err => {
-         console.log(err)
-        // this.setState({Error:true})
-
-        })
-    
+        this.setState({Error:true})
+            console.log("izere",this.state.posts)
+    }) 
+  
 }
-   postSelectedHandler =(id) => {
+     postSelectedHandler =(id) => {
        console.log(this.props.match.url+"/:id")
     this.setState({selectedPostId:id})
     // this.props.history.push("/"+id)
     this.props.history.push({pathname:"/posts/" +id})
 }
     render () {
+        let limitposts=[]
+
+    limitposts=this.state.posts
 
         let posts =<p style ={{textAlign: 'center',color: 'red'}}>Something went wrong!</p>
         if(!this.state.Error)  
-         posts = this.state.posts.map(post => {
+      
+           posts =  limitposts.slice(0,7).map(post => {
             return (
             <Link to ={'/posts/'+ post.id} key = {post.id}>
-                <Post  key = {post.id}
-            title ={post.title} 
-            author ={post.author}
-            clicked ={() =>this.postSelectedHandler(post.id)}/>  
+                <Post  
+                key = {post.id}
+                name ={post.name} 
+                number={post.number}
+                title={post.title}
+                content ={post.content}
+                clicked ={() =>this.postSelectedHandler(post.id)}/>  
          </Link> 
           )
         }
-        )
+           )
+        
 
         return ( 
         <div>
