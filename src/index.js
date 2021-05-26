@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import axios from 'axios'
-axios.defaults.baseURL ='https://jsonplaceholder.typicode.com'
+axios.defaults.baseURL ='https://vila-5dd46-default-rtdb.firebaseio.com/'
 axios.defaults.headers.common['Authorization'] = 'AUTH TOKEN'
 axios.defaults.headers.post['Content-type'] ='application/json'
 axios.interceptors.request.use(request =>{
